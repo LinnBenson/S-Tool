@@ -1,0 +1,14 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:versionCode="1" android:versionName="0.1.0">
+    <!-- BlueStacks Air's host expects versionName and launcher metadata in its install callback.
+         These entries exist only in the instrumentation APK, never in the shipped app. -->
+    <application android:label="S Tool Tests" android:icon="@android:drawable/ic_menu_info_details">
+        <activity android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
