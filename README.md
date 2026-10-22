@@ -5,9 +5,9 @@
 
 ## 下载与安装
 
-当前版本 **0.1.0**，支持 **Android 9（API 28）及以上**。
+当前版本 **0.1.1**，支持 **Android 9（API 28）及以上**。
 
-从 [GitHub Releases](https://github.com/LinnBenson/S-Tool/releases/tag/v0.1.0) 下载 `S-Tool-0.1.0.apk`，使用 Android 安装器安装。Release 同时提供 `SHA256SUMS.txt` 以校验下载文件。正式包名为 `io.softwarebyandroid.tool`。
+从 [GitHub Releases](https://github.com/LinnBenson/S-Tool/releases/tag/v0.1.1) 下载 `S-Tool-0.1.1.apk`，使用 Android 安装器安装。Release 同时提供 `SHA256SUMS.txt` 以校验下载文件。正式包名为 `io.softwarebyandroid.tool`。
 
 ## 功能
 
@@ -51,6 +51,8 @@
 ## 使用限制
 
 - SVG 渲染基于 AndroidSVG 1.4，主要支持静态 SVG；动画、滤镜、`foreignObject`、外部资源及部分文字/CSS 效果不支持。
+- SVG 在进入渲染器前通过 XML 预检；含 `<image>` 的文件（包括内嵌 Base64、外部图片）及 DTD 均会被拒绝，请改用纯矢量 SVG。
+- 开发版和正式版均在构建时移除 AndroidSVG 日志调用，不将 SVG 内容写入系统日志；原始源码仍可由用户主动查看和复制。
 - SVG 文件最大 4 MB；PNG 输出边长最大 8192 像素，总像素最多 1600 万。源码整体复制上限为 128,000 字符。
 - 取色和水印支持 Android 解码器可读取的位图格式，如 PNG、JPEG、WebP；动态图片使用首帧，水印工具不直接读取 SVG。
 - 图片最多 1600 万像素，同时受设备内存预算限制；取色会处理 EXIF 方向并转换到 sRGB。半透明像素可能受到解码器预乘精度影响。
@@ -120,3 +122,13 @@ app/src/main/java/io/softwarebyandroid/tool/
 ## 反馈
 
 欢迎通过 [Issues](https://github.com/LinnBenson/S-Tool/issues) 提交问题或建议。请附上应用版本、Android 版本、设备型号和复现步骤；示例图片请先移除私人信息。
+
+`buildSrc` 中的 AndroidSVG 字节码处理仅移除日志调用，适用于全部构建类型。升级渲染依赖时必须重新运行 SVG 安全测试，并检查最终 APK 中没有残留该依赖的日志调用。
+
+可用 Android SDK 的 `dexdump` 检查 APK 中的 AndroidSVG 日志调用：
+
+```sh
+python3 tools/verify_svg_privacy.py app/build/outputs/apk/release/app-release.apk "$ANDROID_HOME/build-tools/34.0.0/dexdump"
+```
+
+0.1.1 在 BlueStacks Android 13 上通过 24 项设备测试（含 3 项 SVG 安全回归），并通过单元测试和 lint。人工构造的约 101 KB / 内嵌 4096×4096 位图 SVG 现会在渲染前被拒绝。

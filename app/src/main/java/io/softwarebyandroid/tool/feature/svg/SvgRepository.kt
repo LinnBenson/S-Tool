@@ -32,6 +32,7 @@ class SvgRepository(private val resolver: ContentResolver) {
             else -> bytes.toString(Charsets.UTF_8).removePrefix("\uFEFF")
         }
         if (Regex("<!ENTITY", RegexOption.IGNORE_CASE).containsMatchIn(source)) throw ToolFailure(R.string.svg_entities)
+        validateSvgInput(source)
         // Disable DTD/entity expansion; never resolve network or local file references.
         SVG.setInternalEntitiesEnabled(false)
         currentCoroutineContext().ensureActive()

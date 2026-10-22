@@ -13,3 +13,5 @@ captures/
 signing.properties
 .env
 .env.*
+# Build plugin sources (the Java package is named build, not an output directory).
+!buildSrc/src/main/java/io/softwarebyandroid/build/

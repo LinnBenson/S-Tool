@@ -58,7 +58,7 @@
     <string name="svg_warning">部分效果可能不受支持，导出前请检查预览。动画、滤镜及外部资源不会执行或加载。</string>
     <string name="svg_limit">SVG 文件过大，请选择不超过 4 MB 的文件</string>
     <string name="svg_invalid">无法解析此 SVG，请检查文件内容</string>
-    <string name="svg_entities">暂不支持包含实体定义的 SVG，请使用普通 SVG 文件</string>
+    <string name="svg_entities">暂不支持包含 DTD 或实体定义的 SVG，请使用普通 SVG 文件</string>
     <string name="svg_dimensions">SVG 尺寸无效或过大，请使用边长不超过 8192、总像素不超过 1600 万的文件</string>
     <string name="file_error">无法读取文件，请重新选择</string>
     <string name="image_invalid">无法读取图片，请选择有效的 PNG、JPEG 或 WebP 图片</string>
@@ -93,4 +93,5 @@
     <string name="watermark_preview">水印图片预览区域</string>
     <string name="watermark_preset">使用颜色 %1$s</string>
     <string name="watermark_settings_error">设置保存失败，请重试</string>
+    <string name="svg_embedded_image">暂不支持含图片元素的 SVG，请移除图片元素或改用纯矢量 SVG</string>
 </resources>
